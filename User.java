@@ -3,7 +3,11 @@
 //Getters and setters aren't included. Worry about them as needed
 //files not linked so won't compile atm
 
+//NOTE: THE USER CLASS HEIRACHY LEADS TO LOTS OF REPEATED AND UNUSED DATA
+//IF ANY BETTER OPTIONS ARE DISCOVERED THEY SHOULD BE EXPLORED
+
 import java.util.ArrayList;
+import Event;
 
 //USER
 public class User{
@@ -14,12 +18,24 @@ public class User{
   private Host hostMode;
   private Attendee attendeeMode;
 
-  // private ArrayList<(Event,int)>eventList =  new ArrayList<(Event,int)>(); - this is wrong and needs fixing
+  //gives list of events user has access to an whether Host and Attendee:
+  //0 = attendee, 1 = host
+  private ArrayList<(Eventtype)>eventList =  new ArrayList<(Eventtype)>();
 
   //constructer method
+  //this method would be run by an account system (we will manually run though)
   public User(int id, String name){
-      //-create User with given id and name
-      //-construct Host and Attendee and link them
+    this.id = id;
+    this.name = name;
+  }
+
+  //These 2 methods are seperate to constructor or infinite loop occurs with subclasses:
+  //create attendee and host variants for User as needed
+  public createAttendee(){
+    attendeeMode = Attendee(this.id,this.name,this);
+  }
+  public createHost(){
+    hostMode = Host(this.id,this.name,this);
   }
 
   //MUST
@@ -27,8 +43,17 @@ public class User{
   Output: True if event succesfully created, False otherwise
   */
   public boolean createEvent(){
-      //-createsEvent (calls constructor) - User set as Host
-      //-moves Host into event editing menu
+      //Host taken to event creation page
+      //On this page the different buttons, sliders, text boxes etc effect each feature of the event
+      //Base event created the second User accesses this (given an id and User as Host and little else)
+      //Other info set as default and edited by Host in editEvent methods
+
+      //generateID();  //THIS METHOD NEEDS CREATING
+
+      //create skeleton event: -name given as id.
+      Event(id, Integer.toString(id), this.hostMode);
+
+      //-moves Host into event editing menu. HOW THOUGH I DONT KNOW?
       return true
   }
 
@@ -37,9 +62,18 @@ public class User{
   @param id - id of the event joining
   */
   public void joinEventID(int id){
-      //-if event joinable:
-        //-add User as attendee to eventList
-        //-move attendee to event feedback page
+      //for each event in system:  <-KEEP IN HASHMAP in  main?
+        //check for ID match
+          if (event.host == this.hostMode){
+              //-move host to event data page
+              return true;
+          }
+          else if (event.accessible == true && event.linkAccess == true){
+              event.addUser(this.attendeeMode);
+              //-move attendee to event feedback page
+              return true;
+          }
+      return false;
   }
 
   //SHOULD
@@ -47,8 +81,30 @@ public class User{
   @param id - id of the event joining
   */
   public void joinEventMenu(int id){
-      //-check if host or attendee
-      //-move to correct page
+    //for each event in system:  <-KEEP IN HASHMAP in  main?
+      //check for ID match
+        if (event.host == this.hostMode){
+            //-move host to event data page
+            return true;
+        }
+        else if (event.accessible == true){
+            //-move attendee to event feedback page
+            return true;
+        }
+    return false;
+  }
+}
+
+//Small class negating need for tuples in event list for User
+//Type info could just be handled by event but no need to load up all eventData until accessed
+public class Eventtype(){
+
+  private Event event;
+  private int type;
+
+  public Event(Event event, int type){
+    this.event = event;
+    this.type = type;
   }
 }
 
@@ -59,9 +115,8 @@ public class Host extends User{
   private Event currentEvent;
 
   public Host(int id, String name, User user){
-      //User super method here
       super(id,name);
-      //create other parts of Host object
+      this.user = user
   }
 
   //SHOULD
@@ -163,7 +218,7 @@ public class Attendee extends User(){
   public Attendee(int id, String name, User user){
       //-User super method here
       super(id,name);
-      //-create other parts of Attendee object
+      this.user = user;
   }
 
   //MUST
