@@ -20,11 +20,11 @@ public class User{
 
   //gives list of events user has access to an whether Host and Attendee:
   //0 = attendee, 1 = host
-  private ArrayList<(Eventtype)>eventList =  new ArrayList<(Eventtype)>();
+  private ArrayList<Eventtype>eventList =  new ArrayList<(Eventtype)>();
 
   //constructer method
   //this method would be run by an account system (we will manually run though)
-  public User(int id, String name){
+  private User(int id, String name){
     this.id = id;
     this.name = name;
   }
