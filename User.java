@@ -8,6 +8,7 @@
 
 import java.util.ArrayList;
 import Event;
+import main;
 
 //USER
 public class User{
@@ -48,10 +49,10 @@ public class User{
       //Base event created the second User accesses this (given an id and User as Host and little else)
       //Other info set as default and edited by Host in editEvent methods
 
-      //generateID();  //THIS METHOD NEEDS CREATING
+      String id = generateID();  
 
       //create skeleton event: -name given as id.
-      Event(id, Integer.toString(id), this.hostMode);
+      Event(Integer.parseInt(id), id, this.hostMode);
 
       //-moves Host into event editing menu. HOW THOUGH I DONT KNOW?
       return true

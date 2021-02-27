@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import User;
+import main;
 
 public class Event{
 
@@ -181,6 +182,7 @@ public class Tag{
   //also gives list of tags for event. some default always set with event creation
   public Tag(String tag){
     //-feedback initally blank
+    this.tag = tag;
   }
 }
 
