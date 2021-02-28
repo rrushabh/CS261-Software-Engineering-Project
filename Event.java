@@ -6,8 +6,10 @@
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
-import User;
-import main;
+import User.java;
+import main.java;
+import Host.java;
+import Attendee.java;
 
 public class Event{
 
@@ -47,13 +49,13 @@ public class Event{
   }
 
   //checks if user already an attendee of the event and otherwise adds them
-  public boolean AddUser(Attendee attendee){
-    for (UserFeedback user: users){
-        if (user.user == attendee){
+  public boolean addUser(Attendee attendee){
+    for (UserFeedback user: userFeedback){
+        if (user.attendee == attendee){
           return false;
         }
     }
-    user.add(UserFeedback(attendee));
+    userFeedback.add(new UserFeedback(attendee, this));
     return true;
   }
 
@@ -173,10 +175,10 @@ class BinarySearch {
   }
 }
 
-public class Tag{
+class Tag{
 
   String tag;
-  ArrayList<(Feedback)>feedback =  new ArrayList<(Feedback)>();
+  ArrayList<Feedback>feedback =  new ArrayList<Feedback>();
 
   //constructor method
   //also gives list of tags for event. some default always set with event creation
@@ -186,7 +188,7 @@ public class Tag{
   }
 }
 
-public class Feedback{
+class Feedback{
 
   String text;
 
@@ -212,8 +214,8 @@ public class Feedback{
   }
 
   public void calculateMood(){
-    if (){
-
-    }
+    // if (){
+    //
+    // }
   }
 }
