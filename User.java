@@ -21,6 +21,7 @@ public class User{
 
   private Host hostMode;
   private Attendee attendeeMode;
+  private int mode = -1; //-1 FOR USER, 0 FOR ATTENDEE, 1 FOR HOST
 
   //gives list of events user has access to an whether Host and Attendee:
   //0 = attendee, 1 = host
@@ -46,7 +47,7 @@ public class User{
   /*Trigger: button on main screen pressed
   Output: True if event succesfully created, False otherwise
   */
-  public boolean createEvent(){
+  public Event createEvent(){
       //Host taken to event creation page
       //On this page the different buttons, sliders, text boxes etc effect each feature of the event
       //Base event created the second User accesses this (given an id and User as Host and little else)
@@ -60,7 +61,9 @@ public class User{
       this.eventList.add(new Eventtype(newEvent, 1));
 
       //-moves Host into event editing menu. HOW THOUGH I DONT KNOW?
-      return true;
+      this.hostMode.setEvent(newEvent);
+      this.mode = 1;
+      return newEvent;
   }
 
   //MUST
@@ -70,14 +73,19 @@ public class User{
   public boolean joinEventID(int id){
       //NOTE: MAY BE WORTH DOING ID STUFF WITH STRINGS ONLY (easier?)
       for (Event event: main.events){
-        if (event.id == id){
+        if (event.getID() == id){
           if (event.host == this.hostMode){
               //-move host to event data page
+              this.hostMode.setEvent(event);
+              this.mode = 1;
               return true;
           }
           else if (event.accessible == true && event.linkAccess == true){
-              event.addUser(this.attendeeMode);
-              //-move attendee to event feedback page
+              if (!event.addUser(this.attendeeMode)){//gives false if already member
+                this.eventList.add(new Eventtype(event, 0));
+              }
+              this.attendeeMode.setEvent(event);
+              this.mode = 0;
               return true;
           }
         }
@@ -107,6 +115,15 @@ public class User{
 
   public Attendee getAttendee(){
     return attendeeMode;
+  }
+  public Host getHost(){
+    return hostMode;
+  }
+  public String getName(){
+    return name;
+  }
+  public int getID(){
+    return id;
   }
 }
 

@@ -77,36 +77,29 @@ public class Event{
     }
     return sum/this.userFeedback.size();
   }
-}
 
-// Object that stores all the feedback objects a user has submitted to a specific event
-class UserFeedback{
-
-  Attendee attendee;
-  Event event;
-  ArrayList<Feedback>feedback =  new ArrayList<Feedback>();
-
-  //constructor method
-  //this class acts as attendee list for event to so need entry created for each user as they join or are granted access
-  public UserFeedback(Attendee attendee, Event event){
-    this.attendee = attendee;
-    this.event = event;
-  }
-
-  //updates mood for a User
-  public float averageMood(long starttime, long endtime){
-    //-calculate average mood of feedback over a time period
-    BinarySearch ob = new BinarySearch();
-    int n = this.feedback.size();
-    int startInd = ob.binarySearchMin(this.feedback, 0, n - 1, starttime);
-    int endInd = ob.binarySearchMax(this.feedback, 0, n - 1, endtime);
-    ArrayList<Feedback>subarr =  new ArrayList<Feedback>();
-    int sum = 0;
-    for (int i=startInd; i<endInd+1; i++){
-      sum += this.feedback.get(i).mood;
+  public boolean toggleIDAccess(){
+    if (linkAccess == false){
+      linkAccess = true;
+    }else{
+      linkAccess = false;
     }
-    return sum/(endInd+1-startInd);
+    return linkAccess;
   }
+
+  public String getName(){
+    return this.name;
+  }
+  public int getID(){
+    return this.id;
+  }
+  public ArrayList<UserFeedback> getUserFeedback(){
+    return userFeedback;
+  }
+  public void setName(String name){
+    this.name = name;
+  }
+
 }
 
 class BinarySearch {
@@ -172,50 +165,5 @@ class BinarySearch {
     // We reach here when element is not present
     // in array
     return -1;
-  }
-}
-
-class Tag{
-
-  String tag;
-  ArrayList<Feedback>feedback =  new ArrayList<Feedback>();
-
-  //constructor method
-  //also gives list of tags for event. some default always set with event creation
-  public Tag(String tag){
-    //-feedback initally blank
-    this.tag = tag;
-  }
-}
-
-class Feedback{
-
-  String text;
-
-  ArrayList<Tag>tags =  new ArrayList<Tag>();
-  Attendee attendee;
-
-  long timestamp;
-
-  float explicitMood;
-  float sentimentMood;
-
-  float mood;
-
-  public Feedback(String text, ArrayList<Tag>tags, Attendee attendee, float explicitMood){
-    Date date = new Date();
-    this.timestamp = date.getTime();
-    this.text = text;
-    this.tags = tags;
-    this.attendee = attendee;
-    this.explicitMood = explicitMood;
-    this.sentimentMood = 0;
-    this.mood = 0;
-  }
-
-  public void calculateMood(){
-    // if (){
-    //
-    // }
   }
 }

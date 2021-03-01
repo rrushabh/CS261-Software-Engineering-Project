@@ -34,12 +34,19 @@ public class Attendee extends User{
   //MUST
   /* Trigger: enter pressed while text or mood non empty
   *(paramters are gathered from display?)
+  *baseMood = mid of range if no value given
   */
-  public void submitFeedback(int baseMood, Tag[] tags, String text){
+  public void submitFeedback(int baseMood, ArrayList<Tag> tags, String text){
 
     //-feedback object constructed using constructor
-    //-and then submitted for processing
+    Feedback feedback = new Feedback(text, tags, this, baseMood, currentEvent);
     //NOTE: some fields may be blank, and info given to constructor depends on anonymity
   }
 
+  public Event getEvent(){
+    return this.currentEvent;
+  }
+  public void setEvent(Event event){
+    this.currentEvent = event;
+  }
 }

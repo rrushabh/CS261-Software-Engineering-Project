@@ -17,6 +17,13 @@ public class Host extends User{
       this.user = user;
   }
 
+  public void renameEvent(String name){
+    currentEvent.setName(name);
+  }
+  public boolean toggleIDJoining(){
+    return currentEvent.toggleIDAccess();
+  }
+
   //SHOULD
   /*@param tag - string for tag entered in textbox in event menu
   */
@@ -97,5 +104,12 @@ public class Host extends User{
   public void orderFeedback(int type, int direction){
     //-set type to order feedback by and direction to sort
     //-this automatically orders set collected by filtering and displays to Host
+  }
+
+  public Event getEvent(){
+    return this.currentEvent;
+  }
+  public void setEvent(Event event){
+    this.currentEvent = event;
   }
 }
