@@ -6,10 +6,10 @@
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
-import User.java;
-import main.java;
-import Host.java;
-import Attendee.java;
+// import User.java;
+// import main.java;
+// import Host.java;
+// import Attendee.java;
 
 public class Event{
 
@@ -104,8 +104,8 @@ class UserFeedback{
     int sum = 0;
     for (int i=startInd; i<endInd+1; i++){
       sum += this.feedback.get(i).mood;
-    return sum/(endInd+1-startInd);
     }
+    return sum/(endInd+1-startInd);
   }
 }
 

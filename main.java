@@ -1,10 +1,10 @@
 import java.util.ArrayList;
 import java.util.Random;
 
-import User.java;
-import Event.java;
-import Host.java;
-import Attendee.java;
+// import User.java;
+// import Event.java;
+// import Host.java;
+// import Attendee.java;
 
 public class main{
 
@@ -25,8 +25,8 @@ public class main{
       defaults = new ArrayList<Tag>();
 
       usedIDs = new ArrayList<String>();
-      generateID();
-      generateID();
+      String str = generateID();
+      System.out.println(str);
   }
 
   //random rather than continuous for security and unwanted access reasons
