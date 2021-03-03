@@ -84,7 +84,7 @@ public class User{
               if (!event.addUser(this.attendeeMode)){//gives false if already member
                 this.eventList.add(new Eventtype(event, 0));
               }
-              this.attendeeMode.setEvent(event);
+              this.attendeeMode.setEvent(event);//this is where we create Guest if needed or find correct one if been in event before
               this.mode = 0;
               return true;
           }
@@ -124,6 +124,11 @@ public class User{
   }
   public int getID(){
     return id;
+  }
+
+  public void setName(String name){
+    this.name = name;
+    return;
   }
 }
 

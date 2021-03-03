@@ -70,7 +70,8 @@ public class Event{
     //-average these averages
     Date date = new Date();
     long time = date.getTime();       //calculates average mood of feedback between liveTime seconds ago and when this line is called
-    return averageMood(time-1000*this.liveTime, time);
+    currentMood = averageMood(time-1000*this.liveTime, time);
+    return currentMood;
   }
 
   public float averageMood(long starttime, long endtime){

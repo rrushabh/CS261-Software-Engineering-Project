@@ -13,7 +13,12 @@ public class Attendee extends User{
   private Event currentEvent;
 
   private boolean isAnonymous = false; //boolean showing if Attendee appearing as anonymous
-  private String tempUsername; //username for when anonymous (changes each event but consistent for an event)
+
+  private ArrayList<Guest> anonymousUsers = new ArrayList<Guest>(); //LIST OF GUESTS MADE FOR THIS USER (their currentEvent values should allow finding correct one)
+  private Guest anonymousMode; //CREATE WHEN EVENT JOINED
+  //list of temp users associated with this user. Each will have an associated event as so can be found if that event currently being accessed
+  //deleting info on event deletion would be difficult
+
 
   //Note: need method that generates this tempUsername whenever event joined
   //Event will have to store user tempNames to store even if join another and come back
@@ -27,6 +32,11 @@ public class Attendee extends User{
 
   //MUST
   public void toggleAnonymous(){
+    if (isAnonymous == false){
+      isAnonymous = true;
+    }else{
+      isAnonymous = false;
+    }
     //-toggles Attendees anonymous variable
     //-this will effect other things like feedback submission
   }
@@ -39,7 +49,11 @@ public class Attendee extends User{
   public void submitFeedback(int baseMood, ArrayList<Tag> tags, String text){
 
     //-feedback object constructed using constructor
-    Feedback feedback = new Feedback(text, tags, this, baseMood, currentEvent);
+    if (isAnonymous){
+      Feedback feedback = new Feedback(text, tags, this.anonymousMode, baseMood, currentEvent);
+    }else{
+      Feedback feedback = new Feedback(text, tags, this, baseMood, currentEvent);
+    }
     //NOTE: some fields may be blank, and info given to constructor depends on anonymity
   }
 

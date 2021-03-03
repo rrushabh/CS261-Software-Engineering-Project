@@ -14,7 +14,7 @@ public class main{
   static ArrayList<User>users;
 
   //give default tags
-  static ArrayList<Tag>defaults;
+  static ArrayList<Tag>defaults;//note default tags will need to be copied (pass value not pass reference) into event or feedback will be shared across them
 
   //gives event IDs currently in use
   static ArrayList<String>usedIDs; //IDs are 6-digit integers
@@ -37,7 +37,7 @@ public class main{
 
       //generate event ID
       String str = generateID();
-      System.out.println("a random id:" + str);
+      // System.out.println("a random id:" + str);
 
       //create a User
       User user = createUser("name");
@@ -46,7 +46,7 @@ public class main{
       user.createEvent();
       System.out.println(events);
       Host host = user.getHost();
-      System.out.println("eventID:" + host.getEvent().getName());
+      // System.out.println("eventID:" + host.getEvent().getName());
       //change it's name
       host.renameEvent("eventname");
       System.out.println("eventName:" + host.getEvent().getName());
@@ -62,10 +62,10 @@ public class main{
       //see event users
       ArrayList<UserFeedback> eventusers =  new ArrayList<UserFeedback>();
       eventusers = events.get(0).getUserFeedback();
-      System.out.println("names of event users:");
-      for (UserFeedback u : eventusers){
-        System.out.println(u.getUser().getName());
-      }
+      // System.out.println("names of event users:");
+      // for (UserFeedback u : eventusers){
+      //   System.out.println(u.getUser().getName());
+      // }
 
       //Host add tags to event
       host.addTag("tag1");
@@ -83,6 +83,28 @@ public class main{
       attendee.submitFeedback(80, new ArrayList<Tag>(Arrays.asList(attendee.getEvent().getTags().get(0))), "This is some more feedback");
 
       //view feedback
+      // System.out.println("Feedback:");
+      // for (UserFeedback u : eventusers){
+      //   System.out.println("User:" + u.getUser().getName());
+      //   for (Feedback f: u.getFeedback()){
+      //     System.out.println(f.getText() + "," + f.getMood());
+      //   }
+      // }
+
+      //view currentMood
+      // System.out.println(events.get(0).currentMood());
+
+      //JUST MORE EXPERIMENTS:
+      //create another User who adds feedback to the event
+      User user3 = createUser("name3");
+      user3.joinEventID(events.get(0).getID());
+      Attendee attendee2 = user3.getAttendee();
+      attendee2.submitFeedback(80, new ArrayList<Tag>(Arrays.asList(attendee.getEvent().getTags().get(0),attendee.getEvent().getTags().get(1))), "This is even more feedback");
+      //how have values changed?
+      System.out.println("names of event users:");
+      for (UserFeedback u : eventusers){
+        System.out.println(u.getUser().getName());
+      }
       System.out.println("Feedback:");
       for (UserFeedback u : eventusers){
         System.out.println("User:" + u.getUser().getName());
@@ -90,8 +112,8 @@ public class main{
           System.out.println(f.getText() + "," + f.getMood());
         }
       }
+      System.out.println(events.get(0).currentMood());
 
-      
   }
 
   //random rather than continuous for security and unwanted access reasons
@@ -121,7 +143,7 @@ public class main{
     user.createHost();
     user.createAttendee();
     users.add(user);
-    System.out.println("A user:" + user);
+    // System.out.println("A user:" + user);
     return user;
   }
 
