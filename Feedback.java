@@ -23,30 +23,44 @@ public class Feedback{
     this.tags = tags;
     this.attendee = attendee;
     this.explicitMood = explicitMood;
-    this.sentimentMood = 0;
+    this.sentimentMood = 50;
     this.mood = 0;
     this.event = event;
 
     //do sentiment analysis
+    this.calculateMood();
 
     //store the event
     this.storeFeedback();
   }
 
+  //ineffcient method atm - USE HASHMAPS
   public void storeFeedback(){
     for (UserFeedback u : event.userFeedback){
       if (u.getUser() == attendee){
         u.addFeedback(this);
       }
     }
-    // for (Tag t: tags){
-    //   //add entry in Hashmap
-    // }
+    for (Tag t1: this.tags){
+      for (Tag t2: event.tags){
+        if (t1.getTag().equals(t2.getTag())) {
+          t2.addFeedback(this);
+        }
+      }
+    }
   }
 
   public void calculateMood(){
-    // if (){
-    //
-    // }
+    //PERFORM SENTIMENT ANALYSIS to get sentimentMood
+
+    this.mood = (explicitMood + sentimentMood) / 2;
+    //average even if no text or no explicit mood. encourages justification and clear mood given 
+  }
+
+  public String getText(){
+    return text;
+  }
+  public float getMood(){
+    return mood;
   }
 }

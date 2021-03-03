@@ -11,4 +11,12 @@ class Tag{
     //-feedback initally blank
     this.tag = tag;
   }
+
+  public void addFeedback(Feedback f){
+    this.feedback.add(f);
+  }
+
+  public String getTag(){
+    return tag;
+  }
 }

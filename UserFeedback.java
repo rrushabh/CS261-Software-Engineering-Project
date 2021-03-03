@@ -37,4 +37,7 @@ class UserFeedback{
   public Attendee getUser(){
     return attendee;
   }
+  public ArrayList<Feedback> getFeedback(){
+    return feedback;
+  }
 }

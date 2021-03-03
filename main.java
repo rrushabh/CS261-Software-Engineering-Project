@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.Random;
+import java.util.*;
 
 // import User.java;
 // import Event.java;
@@ -61,10 +62,36 @@ public class main{
       //see event users
       ArrayList<UserFeedback> eventusers =  new ArrayList<UserFeedback>();
       eventusers = events.get(0).getUserFeedback();
-      System.out.print("names of event users:");
+      System.out.println("names of event users:");
       for (UserFeedback u : eventusers){
         System.out.println(u.getUser().getName());
       }
+
+      //Host add tags to event
+      host.addTag("tag1");
+      host.addTag("tag2");
+
+      //see tags
+      System.out.println("event tags:");
+      for (Tag t : events.get(0).getTags()){
+        System.out.println(t.getTag());
+      }
+
+      //submit feedback
+      //50 used for base mood if none given (0-100 scale)
+      attendee.submitFeedback(50, new ArrayList<Tag>(Arrays.asList(attendee.getEvent().getTags().get(0))), "This is some feedback");
+      attendee.submitFeedback(80, new ArrayList<Tag>(Arrays.asList(attendee.getEvent().getTags().get(0))), "This is some more feedback");
+
+      //view feedback
+      System.out.println("Feedback:");
+      for (UserFeedback u : eventusers){
+        System.out.println("User:" + u.getUser().getName());
+        for (Feedback f: u.getFeedback()){
+          System.out.println(f.getText() + "," + f.getMood());
+        }
+      }
+
+      
   }
 
   //random rather than continuous for security and unwanted access reasons

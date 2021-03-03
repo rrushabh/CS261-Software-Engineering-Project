@@ -1,0 +1,6 @@
+Top priority:
+-Add anonymity functionality - make temp user objects? to sort feedback by user?
+-Add sentiment analysis - just add in calculate mood
+-Link with front end 
+
+-Add Should methods

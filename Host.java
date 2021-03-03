@@ -28,8 +28,9 @@ public class Host extends User{
   /*@param tag - string for tag entered in textbox in event menu
   */
   public void addTag(String tag){
-      //Checks tag is non empty
-      //Adds a tagObject to the currentEvents list of them
+    //Checks tag is non empty
+    //Adds a tagObject to the currentEvents list of them
+    currentEvent.addTag(tag);
   }
 
   //SHOULD

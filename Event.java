@@ -20,8 +20,11 @@ public class Event{
 
   // ArrayList of all feedback by user
   ArrayList<UserFeedback>userFeedback =  new ArrayList<UserFeedback>();
+
   // HashMap of ArrayLists of feedback for each Tag
   HashMap<String, ArrayList<UserFeedback>>feedbackByTag = new HashMap<String, ArrayList<UserFeedback>>();
+  //HAD A THOUGHT ABOUT THIS: STROING BY TAG AND USER WITHIN WHILE REQUIRING MORE EFFORT COULD WORK
+  //FOR NOW JUST TO ACHIEVE BASIC FUNCTIONALITY I HAVE USED TAG CLASS WITH EACH TAG HAVING AN ARRAYLIST OF FEEDBACK
 
   ArrayList<Tag>tags =  new ArrayList<Tag>();
 
@@ -87,11 +90,18 @@ public class Event{
     return linkAccess;
   }
 
+  public void addTag(String tag){
+    this.tags.add(new Tag(tag));
+  }
+
   public String getName(){
     return this.name;
   }
   public int getID(){
     return this.id;
+  }
+  public ArrayList<Tag> getTags(){
+    return tags;
   }
   public ArrayList<UserFeedback> getUserFeedback(){
     return userFeedback;
