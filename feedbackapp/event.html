@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <script src="https://kit.fontawesome.com/df78d7686b.js" crossorigin="anonymous"></script>
+<style>
+
+
+html, body {
+  display: flex;
+  flex-direction: column;
+}
+
+body {
+    background-image: linear-gradient(#716dff,#a47dff);
+    background-attachment: fixed;
+    display: flex;
+    color: white;
+    font-family: 'Montserrat', sans-serif;
+    font-style: normal;
+    font-weight: 400;
+	  justify-content: center;
+	  flex-direction: column;
+    margin: 0;
+    padding: 0;
+}
+
+/* The Modal (background) */
+.modal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  padding-top: 100px; /* Location of the box */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.5); /* Black w/ opacity */
+}
+
+/* Modal Content */
+.modal-content {
+  background-color: #fefefe;
+  margin: auto;
+  padding: 20px;
+  border: 1px solid #888;
+  border-radius: 5px;
+  width: 80%;
+}
+
+/* The Close Button */
+.close {
+  color: #aaaaaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: #000;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.exit, .settings {
+  background-color: transparent;
+  text-align: center;
+  line-height: 50%;
+  border: none;
+  color: white;
+  border-radius: 2px;
+  padding: 2px 2px;
+  cursor: pointer;
+  margin: 30px;
+}
+
+.anon, .templates {
+  background-color: transparent;
+  text-align: center;
+  line-height: 50%;
+  border: none;
+  font-size: 14px;
+  color: rgb(184, 184, 184);
+  border-radius: 2px;
+  padding: 2px 2px;
+  cursor: pointer;
+  margin: 10px;
+}
+
+/* Darker background on mouse-over */
+.exit:hover {
+  color: #aaaaaa;
+}
+
+.settings:hover {
+  color: #aaaaaa;
+}
+
+.anon:hover {
+  color: #6b6b6b;
+}
+
+.templates:hover {
+  color: #6b6b6b;
+}
+
+.eventname, .exit, .settings {
+  display: inline-block;
+}
+
+.eventname {
+  position: center;
+}
+
+.outer {
+  display: table;
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+}
+
+.middle {
+  display: table-cell;
+  vertical-align: middle;
+}
+
+.inner {
+  margin-left: auto;
+  margin-right: auto;
+  width: 400px;
+  text-align: center;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  /*whatever width you want*/
+}
+
+input[class="field"]::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+  color: #9BA4B0;
+  font-family: 'Montserrat', sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  opacity: 1; /* Firefox */
+}
+
+input[class="code"]::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+  color: white;
+  font-family: 'Montserrat', sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  opacity: 1; /* Firefox */
+}
+
+.field {
+  margin: 8px;
+  border-radius: 100px;
+  border: none;
+  width: 700px;
+  font-family: 'Montserrat', sans-serif;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 12px;
+  color: black;
+  padding: 12px;
+}
+
+h1 {
+	color: white;
+  font-family: 'Montserrat', sans-serif;
+  font-style: normal;
+  font-weight: 700;
+}
+
+.header {
+  width: 100%;
+  height: 12vh;
+  min-height: 90px;
+  display: table;
+  background-color: rgba(0, 0, 0, 0.3);
+  color: white;
+  font-size: 18px;
+  text-align: center;
+}
+
+.main {
+  float: left;
+  height: 87vh;
+  width: 142.1vh;
+  color: black;
+}
+
+.container {
+  display: grid;
+  grid-template-columns: 142vh 87.2vh; 
+  grid-template-rows: 87.5vh;
+  background-color: #f8fafd;
+}
+
+.code {
+  text-align: center;
+  width: 20px;
+  background-color: transparent;
+  border: none;
+  padding: 6px;
+  margin: 2px;
+  color: white;
+  font-family: 'Montserrat', sans-serif;
+  font-style: normal;
+  font-weight: 700;
+}
+
+.conversation {
+  background-color: #efefef;
+  border-style: ridge;
+  border-top: none;
+  border-left: none;
+  height: 79.3vh;
+}
+
+.feedbackblock {
+  height: 7.7vh;
+  background-color: #efefef;
+  border-top-color: gray;
+  border-bottom-color: gray;
+}
+
+.data {
+  background-color: #f8fafd;
+  float: left;
+  color: black;
+  width: 70.4vh;
+  height: 87.2vh;
+  border: solid;
+  border-top: none;
+  border-bottom: none;
+  border-right: none;
+  border-left-color: #d1d1d1;
+}
+
+input:focus::-webkit-input-placeholder { color:transparent; }
+input:focus:-moz-placeholder { color:transparent; } /* Firefox 18- */
+input:focus::-moz-placeholder { color:transparent; } /* Firefox 19+ */
+input:focus:-ms-input-placeholder { color:transparent; } /* IE 8 and older ;) */
+
+</style>
+
+<title>Event - Feedback App</title>
+</head>
+
+<body>
+
+<div class = header>
+  <button class = exit style="float: left; margin-left: 40px;"><i class="material-icons" style="transform: rotate(180deg); font-size:28px;">exit_to_app</i></button>
+  <h1 class = eventname>Event ID #123</h1>
+  <button class = settings style="float: right; margin-right: 40px;"><i class="material-icons" style="font-size:28px;">settings</i></button>
+</div>
+<div class = container>
+  <div class = main>
+    <div class = conversation>
+      messages
+    </div>
+    <div class=feedbackblock>
+      <form action="/action_page.php" method="post">
+        <input class=field id="message" type="text" placeholder="Enter feedback" name="message"><button type="button" id="button" value = "button" onclick="setColor('button', '#101010')" class="anon"><i class="fab fa-redhat fa-lg"></i></button><button type="button" id="templates" value = "button" class="templates"><i class="	fas fa-clipboard-list fa-lg"></i></button><br>
+      </form>
+    </div>
+    <!-- The Modal -->
+    <div id="myModal" class="modal">
+
+    <!-- Modal content -->
+    <div class="modal-content">
+      <span class="close">&times;</span>
+      <p>Templates go here</p>
+    </div>
+    </div>
+  </div>
+  <div class = data>
+    host data
+  </div>
+</div>
+
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+
+<script>
+
+var count = 1;
+function setColor(btn, color) {
+    var button = document.getElementById(btn);
+    if (count == 0) {
+        button.style.color = "rgb(184, 184, 184)"
+        count = 1;        
+    }
+    else {
+        button.style.color = "#a47dff"
+        count = 0;
+    }
+}
+
+// Get the modal
+var modal = document.getElementById("myModal");
+
+// Get the button that opens the modal
+var btn = document.getElementById("templates");
+
+// Get the <span> element that closes the modal
+var span = document.getElementsByClassName("close")[0];
+
+// When the user clicks the button, open the modal 
+btn.onclick = function() {
+  modal.style.display = "block";
+}
+
+// When the user clicks on <span> (x), close the modal
+span.onclick = function() {
+  modal.style.display = "none";
+}
+
+// When the user clicks anywhere outside of the modal, close it
+window.onclick = function(event) {
+  if (event.target == modal) {
+    modal.style.display = "none";
+  }
+}
+
+</script>
+
+</body>
+</html>
