@@ -23,6 +23,9 @@ public class Host extends User{
   public boolean toggleIDJoining(){
     return currentEvent.toggleIDAccess();
   }
+  public boolean toggleGuests(){
+    return currentEvent.toggleGuests();
+  }
 
   //SHOULD
   /*@param tag - string for tag entered in textbox in event menu

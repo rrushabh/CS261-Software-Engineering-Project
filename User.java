@@ -86,6 +86,7 @@ public class User{
               }
               this.attendeeMode.setEvent(event);//this is where we create Guest if needed or find correct one if been in event before
               this.mode = 0;
+              this.attendeeMode.setAnonymousMode();
               return true;
           }
         }
@@ -128,7 +129,15 @@ public class User{
 
   public void setName(String name){
     this.name = name;
-    return;
+  }
+  public void setMode(int mode){
+    this.mode = mode;
+  }
+  public void setID(int id){
+    this.id = id;
+  }
+  public void addEvent(Event event, int type){
+    this.eventList.add(new Eventtype(event, type));
   }
 }
 

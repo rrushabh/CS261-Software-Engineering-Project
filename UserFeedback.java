@@ -21,6 +21,9 @@ class UserFeedback{
     BinarySearch ob = new BinarySearch();
     int n = this.feedback.size();
     int startInd = ob.binarySearchMin(this.feedback, 0, n - 1, starttime);
+    // if (startInd == -1){
+    //   return 50;
+    // }
     int endInd = ob.binarySearchMax(this.feedback, 0, n - 1, endtime);
     ArrayList<Feedback>subarr =  new ArrayList<Feedback>();
     int sum = 0;

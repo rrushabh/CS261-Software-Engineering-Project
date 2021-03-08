@@ -76,10 +76,19 @@ public class Event{
 
   public float averageMood(long starttime, long endtime){
     float sum = 0;
+    int size = this.userFeedback.size();
     for (int i=0; i<this.userFeedback.size(); i++){
-      sum += this.userFeedback.get(i).averageMood(starttime, endtime);
+      if (this.userFeedback.get(i).getFeedback().size() != 0){ //ignore Users with no feedback
+        sum += this.userFeedback.get(i).averageMood(starttime, endtime);
+      }else{
+        size -= 1;
+      }
+      //do we group anonymous and non anonymous feedback for same user for total? - probably not
     }
-    return sum/this.userFeedback.size();
+    if (size == 0){
+      return 0;
+    }
+    return sum/size;
   }
 
   public boolean toggleIDAccess(){
@@ -89,6 +98,14 @@ public class Event{
       linkAccess = false;
     }
     return linkAccess;
+  }
+  public boolean toggleGuests(){
+    if (guests == false){
+      guests = true;
+    }else{
+      guests = false;
+    }
+    return guests;
   }
 
   public void addTag(String tag){

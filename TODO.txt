@@ -1,7 +1,6 @@
 Top priority:
--Add anonymity functionality - make temp user objects? to sort feedback by user?
-	-need to consider feedback submitted by Guests
-	-need to consider accessing events as Guests - users start as guests until log-in  
+-Add anonymity functionality -
+	-how to adjust feedback for guests?
 -Add sentiment analysis - just add in calculate mood
 -Link with front end 
 

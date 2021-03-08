@@ -41,6 +41,20 @@ public class Attendee extends User{
     //-this will effect other things like feedback submission
   }
 
+  //sets the anonymous mode for a User, done whenever joining an event
+  public void setAnonymousMode(){
+    for (Guest g : anonymousUsers){
+      if (g.getEvent() == this.getEvent()){
+        anonymousMode = g;
+        return;
+      }
+    }
+    anonymousMode = new Guest(this);
+    anonymousMode.setEvent(this.currentEvent);
+    anonymousUsers.add(anonymousMode);
+    this.currentEvent.addUser(anonymousMode);
+  }
+
   //MUST
   /* Trigger: enter pressed while text or mood non empty
   *(paramters are gathered from display?)
@@ -60,7 +74,13 @@ public class Attendee extends User{
   public Event getEvent(){
     return this.currentEvent;
   }
+  public User getUser(){
+    return this.user;
+  }
   public void setEvent(Event event){
     this.currentEvent = event;
+  }
+  public void setUser(User user){
+    this.user = user;
   }
 }

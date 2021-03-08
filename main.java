@@ -17,6 +17,7 @@ public class main{
   static ArrayList<Tag>defaults;//note default tags will need to be copied (pass value not pass reference) into event or feedback will be shared across them
 
   //gives event IDs currently in use
+  //cleanup of these IDs on deletion etc. needs to still be added.
   static ArrayList<String>usedIDs; //IDs are 6-digit integers
 
   static int userNumber; //user IDs are sequential as only used by system not seen
@@ -49,7 +50,7 @@ public class main{
       // System.out.println("eventID:" + host.getEvent().getName());
       //change it's name
       host.renameEvent("eventname");
-      System.out.println("eventName:" + host.getEvent().getName());
+      // System.out.println("eventName:" + host.getEvent().getName());
 
       //create another User
       User user2 = createUser("name2");
@@ -72,10 +73,10 @@ public class main{
       host.addTag("tag2");
 
       //see tags
-      System.out.println("event tags:");
-      for (Tag t : events.get(0).getTags()){
-        System.out.println(t.getTag());
-      }
+      // System.out.println("event tags:");
+      // for (Tag t : events.get(0).getTags()){
+      //   System.out.println(t.getTag());
+      // }
 
       //submit feedback
       //50 used for base mood if none given (0-100 scale)
@@ -100,19 +101,54 @@ public class main{
       user3.joinEventID(events.get(0).getID());
       Attendee attendee2 = user3.getAttendee();
       attendee2.submitFeedback(80, new ArrayList<Tag>(Arrays.asList(attendee.getEvent().getTags().get(0),attendee.getEvent().getTags().get(1))), "This is even more feedback");
+
+      //GUEST STUFF
+      //create guest
+      User base = new User(0,"default");
+      Guest guest = new Guest(base);
+      //joining as guest
+      host.toggleGuests();
+      guest.joinEventID(events.get(0).getID());
+      //submitting anonymously
+      attendee.toggleAnonymous();
+      attendee.submitFeedback(30, new ArrayList<Tag>(Arrays.asList(attendee.getEvent().getTags().get(1))), "This is some anonymous feedback");
+      attendee.toggleAnonymous();
+
+      //EVEN MORE EXPERIMENTS
+      //create more events and check anonymity as User moves between them
+      User user4 = createUser("name4");
+      user4.createEvent();
+      Host host2 = user4.getHost();
+      host2.renameEvent("eventname2");
+      host2.toggleIDJoining();
+      //user now joins new event
+      user2.joinEventID(events.get(1).getID()); //NEED TO MAKE MORE CLEAR IF THIS FAILS
+      attendee.toggleAnonymous();
+      host2.addTag("tag2-1");
+      attendee.submitFeedback(30, new ArrayList<Tag>(Arrays.asList(attendee.getEvent().getTags().get(0))), "This is some more anonymous feedback on a different event");
+      attendee.toggleAnonymous();
+      //user now returns to orginal
+      user2.joinEventID(events.get(0).getID());
+      attendee.toggleAnonymous();
+      attendee.submitFeedback(30, new ArrayList<Tag>(Arrays.asList(attendee.getEvent().getTags().get(1))), "This is some more anonymous feedback back on the first event");
+      attendee.toggleAnonymous();
+
+
       //how have values changed?
-      System.out.println("names of event users:");
-      for (UserFeedback u : eventusers){
-        System.out.println(u.getUser().getName());
-      }
       System.out.println("Feedback:");
-      for (UserFeedback u : eventusers){
-        System.out.println("User:" + u.getUser().getName());
-        for (Feedback f: u.getFeedback()){
-          System.out.println(f.getText() + "," + f.getMood());
+      for (Event e: events){
+        System.out.println("Event:" + e.getName());
+        eventusers = e.getUserFeedback();
+        for (UserFeedback u : eventusers){
+          System.out.println("User:" + u.getUser().getName());
+          for (Feedback f: u.getFeedback()){
+            System.out.println(f.getText() + "," + f.getMood());
+          }
         }
+        System.out.println(e.currentMood());
       }
-      System.out.println(events.get(0).currentMood());
+
+
 
   }
 
