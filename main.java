@@ -7,6 +7,8 @@ import java.util.*;
 // import Host.java;
 // import Attendee.java;
 
+
+
 public class main{
 
   //would conenct to some server or database
@@ -148,8 +150,17 @@ public class main{
         System.out.println(e.currentMood());
       }
 
-
-
+      //filtering feedback and setting what should be displayed:
+      //to display all feedback just filter by all users (or all tags - less efficient)
+      events.get(0).setDisplay(host.filterFeedbackUser(new ArrayList<Integer>(Arrays.asList(attendee.getID(),attendee2.getID()))));
+      //always sort by time before displaying
+      events.get(0).sortDisplay();
+      //the display ordered by time
+      System.out.println("Filtered feedback:");
+      Event event = events.get(0);
+      for (Feedback f: event.getDisplay()){
+        System.out.println(f.getText() + "," + f.getTime());
+      }
   }
 
   //random rather than continuous for security and unwanted access reasons

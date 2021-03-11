@@ -19,4 +19,7 @@ class Tag{
   public String getTag(){
     return tag;
   }
+  public ArrayList<Feedback> getFeedback(){
+    return feedback;
+  }
 }

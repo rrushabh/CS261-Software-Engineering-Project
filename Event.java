@@ -6,6 +6,7 @@
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Comparator;
 // import User.java;
 // import main.java;
 // import Host.java;
@@ -27,6 +28,9 @@ public class Event{
   //FOR NOW JUST TO ACHIEVE BASIC FUNCTIONALITY I HAVE USED TAG CLASS WITH EACH TAG HAVING AN ARRAYLIST OF FEEDBACK
 
   ArrayList<Tag>tags =  new ArrayList<Tag>();
+
+  //displayFeedback either decided by sorting done by Host or just all Feedback
+  ArrayList<Feedback> displayFeedback = new ArrayList<Feedback>();
 
   float currentMood;
 
@@ -107,6 +111,18 @@ public class Event{
     }
     return guests;
   }
+
+  public void sortDisplay(){
+    displayFeedback.sort(new TimeSorter());
+  }
+
+  public void setDisplay(ArrayList<Feedback> feedback){
+    this.displayFeedback = feedback;
+  }
+  public ArrayList<Feedback> getDisplay(){
+    return displayFeedback;
+  }
+
 
   public void addTag(String tag){
     this.tags.add(new Tag(tag));
@@ -194,4 +210,12 @@ class BinarySearch {
     // in array
     return -1;
   }
+}
+
+class TimeSorter implements Comparator<Feedback>{
+
+    @Override
+    public int compare(Feedback o1, Feedback o2) {
+        return Long.compare(o1.getTime(),o2.getTime());
+    }
 }

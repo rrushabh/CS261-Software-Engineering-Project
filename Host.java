@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Comparator;
 
 // import User.java;
 // import main.java;
@@ -61,11 +62,44 @@ public class Host extends User{
   //NOTE: general method needed across following methods (get Attendee from id)
 
   //SHOULD
-  public void filterFeedback(String[] tag){
+  public ArrayList<Feedback> filterFeedbackTags(ArrayList<String> tags){
     //-adjust feedback screen to only show feedback that matches a tag in the list
+
+    //get the feedback
+    ArrayList<Feedback> feedback =  new ArrayList<Feedback>();
+    ArrayList<Tag> taggedFeedback = currentEvent.getTags();
+    for (String t1: tags){
+      for (Tag t2: taggedFeedback){
+        if (t2.getTag().equals(t1)){
+          feedback.addAll(t2.getFeedback());
+        }
+      }
+    }
+    //remove duplicates (if multiple tags match)
+    ArrayList<Feedback> feedbackUnique =  new ArrayList<Feedback>();
+    for (Feedback f: feedback){
+      if(!feedbackUnique.contains(f)){
+        feedbackUnique.add(f);
+      }
+    }
+    //still need to order by time
+    return feedbackUnique;
   }
-  public void filterFeedback(int[] Userid){
+  public ArrayList<Feedback> filterFeedbackUser(ArrayList<Integer> userIDs){
     //-adjust feedback screen to only show feedback that matches a user whose ID is in the list
+
+    //get the feedback
+    ArrayList<Feedback> feedback =  new ArrayList<Feedback>();
+    ArrayList<UserFeedback> userFeedback = currentEvent.getUserFeedback();
+    for (int u1: userIDs){
+      for (UserFeedback u2: userFeedback){
+        if (u2.getUser().getID() == u1){
+          feedback.addAll(u2.getFeedback());
+        }
+      }
+    }
+    //still need to order by time
+    return feedback;
   }
   //Can these work interchangeably or is it one or the other?
   //This will be comparaitvely difficult to some other to implement

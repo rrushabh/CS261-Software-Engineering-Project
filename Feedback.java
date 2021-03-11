@@ -54,7 +54,7 @@ public class Feedback{
     //PERFORM SENTIMENT ANALYSIS to get sentimentMood
 
     this.mood = (explicitMood + sentimentMood) / 2;
-    //average even if no text or no explicit mood. encourages justification and clear mood given 
+    //average even if no text or no explicit mood. encourages justification and clear mood given
   }
 
   public String getText(){
@@ -62,5 +62,8 @@ public class Feedback{
   }
   public float getMood(){
     return mood;
+  }
+  public long getTime(){
+    return timestamp;
   }
 }
