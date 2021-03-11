@@ -3,5 +3,6 @@ Top priority:
 	-how to adjust feedback for guests?
 -Add sentiment analysis - just add in calculate mood
 -Link with front end 
-
--Add Should methods
+-Add default tags
+-Add option to delete events 
+	-how to delete everywhere?
