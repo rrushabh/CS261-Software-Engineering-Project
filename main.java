@@ -2,6 +2,20 @@ import java.util.ArrayList;
 import java.util.Random;
 import java.util.*;
 
+import edu.stanford.nlp.coref.CorefCoreAnnotations;
+
+import edu.stanford.nlp.coref.data.CorefChain;
+import edu.stanford.nlp.io.*;
+import edu.stanford.nlp.ling.*;
+import edu.stanford.nlp.pipeline.*;
+import edu.stanford.nlp.semgraph.SemanticGraph;
+import edu.stanford.nlp.semgraph.SemanticGraphCoreAnnotations;
+import edu.stanford.nlp.semgraph.SemanticGraphEdge;
+import edu.stanford.nlp.sentiment.SentimentCoreAnnotations;
+// import edu.stanford.nlp.sentiment.SentimentAnnotater;
+import edu.stanford.nlp.trees.*;
+import edu.stanford.nlp.util.*;
+
 // import User.java;
 // import Event.java;
 // import Host.java;
@@ -29,6 +43,13 @@ public class main{
 
       //In practise this will link User to main page and let them go from there
       //For now it allows testing
+
+      SentimentAnalyser sentiment = new SentimentAnalyser();
+      System.out.println(sentiment.Analyse("this is a sentence"));
+      System.out.println(sentiment.Analyse("this is bad"));
+      System.out.println(sentiment.Analyse("i hate everything"));
+      System.out.println(sentiment.Analyse("this is good"));
+      System.out.println(sentiment.Analyse("this is really great"));
 
       events = new ArrayList<Event>();
       users = new ArrayList<User>();
