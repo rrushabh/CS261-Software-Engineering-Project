@@ -25,7 +25,6 @@ class UserFeedback{
     //   return 50;
     // }
     int endInd = ob.binarySearchMax(this.feedback, 0, n - 1, endtime);
-    ArrayList<Feedback>subarr =  new ArrayList<Feedback>();
     int sum = 0;
     for (int i=startInd; i<endInd+1; i++){
       sum += this.feedback.get(i).mood;
