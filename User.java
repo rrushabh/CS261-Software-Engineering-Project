@@ -54,10 +54,10 @@ public class User{
       //Other info set as default and edited by Host in editEvent methods
 
       String id = main.generateID();
-
+      int ID = Integer.parseInt(id);
       //create skeleton event: -name given as id.
       Event newEvent = new Event(Integer.parseInt(id), id, this.hostMode);
-      main.events.add(newEvent);
+      main.events.put(ID, newEvent);
       this.eventList.add(new Eventtype(newEvent, 1));
 
       //-moves Host into event editing menu. HOW THOUGH I DONT KNOW?
@@ -72,23 +72,22 @@ public class User{
   */
   public boolean joinEventID(int id){
       //NOTE: MAY BE WORTH DOING ID STUFF WITH STRINGS ONLY (easier?)
-      for (Event event: main.events){
-        if (event.getID() == id){
-          if (event.host == this.hostMode){
-              //-move host to event data page
-              this.hostMode.setEvent(event);
-              this.mode = 1;
-              return true;
+      if (main.events.containsKey(id)){
+        Event event = main.events.get(id);
+        if (event.host == this.hostMode){
+          //-move host to event data page
+          this.hostMode.setEvent(event);
+          this.mode = 1;
+          return true;
+      }
+        else if (event.accessible == true && event.linkAccess == true){
+          if (!event.addUser(this.attendeeMode)){//gives false if already member
+            this.eventList.add(new Eventtype(event, 0));
           }
-          else if (event.accessible == true && event.linkAccess == true){
-              if (!event.addUser(this.attendeeMode)){//gives false if already member
-                this.eventList.add(new Eventtype(event, 0));
-              }
-              this.attendeeMode.setEvent(event);//this is where we create Guest if needed or find correct one if been in event before
-              this.mode = 0;
-              this.attendeeMode.setAnonymousMode();
-              return true;
-          }
+          this.attendeeMode.setEvent(event);//this is where we create Guest if needed or find correct one if been in event before
+          this.mode = 0;
+          this.attendeeMode.setAnonymousMode();
+          return true;
         }
       }
       return false;
@@ -99,16 +98,15 @@ public class User{
   @param id - id of the event joining
   */
   public boolean joinEventMenu(int id){
-    for (Event event: main.events){
-      if (event.id == id){
-        if (event.host == this.hostMode){
-            //-move host to event data page
-            return true;
-        }
-        else if (event.accessible == true){
-            //-move attendee to event feedback page
-            return true;
-        }
+    if (main.events.containsKey(id)){
+      Event event = main.events.get(id);
+      if (event.host == this.hostMode){
+          //-move host to event data page
+          return true;
+      }
+      else if (event.accessible == true){
+          //-move attendee to event feedback page
+          return true;
       }
     }
     return false;

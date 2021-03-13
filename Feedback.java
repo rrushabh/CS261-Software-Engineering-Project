@@ -11,10 +11,10 @@ public class Feedback{
 
   long timestamp;
 
-  float explicitMood;
-  float sentimentMood;
+  double explicitMood;
+  double sentimentMood;
 
-  float mood;
+  double mood;
 
   public Feedback(String text, ArrayList<Tag>tags, Attendee attendee, float explicitMood, Event event){
     Date date = new Date();
@@ -23,7 +23,7 @@ public class Feedback{
     this.tags = tags;
     this.attendee = attendee;
     this.explicitMood = explicitMood;
-    this.sentimentMood = 50;
+    this.sentimentMood = 2.0;
     this.mood = 0;
     this.event = event;
 
@@ -36,6 +36,7 @@ public class Feedback{
 
   //ineffcient method atm - USE HASHMAPS
   public void storeFeedback(){
+    /*
     for (UserFeedback u : event.userFeedback){
       if (u.getUser() == attendee){
         u.addFeedback(this);
@@ -48,19 +49,24 @@ public class Feedback{
         }
       }
     }
+    */
+    this.event.userFeedback.get(this.attendee.getID()).addFeedback(this);
+    for (Tag tag : this.tags){
+      this.event.feedbackByTag.get(tag.tag).add(this);
+    }
   }
 
   public void calculateMood(){
     //PERFORM SENTIMENT ANALYSIS to get sentimentMood
-
-    this.mood = (explicitMood + sentimentMood) / 2;
+    this.sentimentMood = this.event.analyser.Analyse(this.text);
+    this.mood = (this.explicitMood + this.sentimentMood)*12.5;
     //average even if no text or no explicit mood. encourages justification and clear mood given
   }
 
   public String getText(){
     return text;
   }
-  public float getMood(){
+  public double getMood(){
     return mood;
   }
   public long getTime(){

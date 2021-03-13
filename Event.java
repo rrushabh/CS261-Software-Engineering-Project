@@ -19,11 +19,11 @@ public class Event{
 
   Host host;
 
-  // ArrayList of all feedback by user
-  ArrayList<UserFeedback>userFeedback =  new ArrayList<UserFeedback>();
+  // HashMap of all feedback by user ID
+  HashMap<Integer, UserFeedback>userFeedback =  new HashMap<Integer, UserFeedback>();
 
-  // HashMap of ArrayLists of feedback for each Tag
-  HashMap<String, ArrayList<UserFeedback>>feedbackByTag = new HashMap<String, ArrayList<UserFeedback>>();
+  // HashMap of ArrayLists of feedback for each Tag - ignores User
+  HashMap<String, ArrayList<Feedback>>feedbackByTag = new HashMap<String, ArrayList<Feedback>>();
   //HAD A THOUGHT ABOUT THIS: STROING BY TAG AND USER WITHIN WHILE REQUIRING MORE EFFORT COULD WORK
   //FOR NOW JUST TO ACHIEVE BASIC FUNCTIONALITY I HAVE USED TAG CLASS WITH EACH TAG HAVING AN ARRAYLIST OF FEEDBACK
 
@@ -44,6 +44,9 @@ public class Event{
   int liveTime = 300; //number of seconds live mood will be calulated over, default = 5 mins
 
   ArrayList<Float>moodGraph =  new ArrayList<Float>();//for graph may need to store a list of mood values across time (rather than recalculating when needed)
+  
+  // Semantic Analyser object for this event
+  SentimentAnalyser analyser = new SentimentAnalyser();
 
   //Constuctor method
   //Users given and UserFeedback made for each
@@ -57,12 +60,10 @@ public class Event{
 
   //checks if user already an attendee of the event and otherwise adds them
   public boolean addUser(Attendee attendee){
-    for (UserFeedback user: userFeedback){
-        if (user.attendee == attendee){
-          return false;
-        }
-    }
-    userFeedback.add(new UserFeedback(attendee, this));
+      if (userFeedback.containsKey(attendee.getID())){
+        return false;
+      }
+    userFeedback.put(attendee.getID(), new UserFeedback(attendee, this));
     return true;
   }
 
@@ -74,16 +75,16 @@ public class Event{
     //-average these averages
     Date date = new Date();
     long time = date.getTime();       //calculates average mood of feedback between liveTime seconds ago and when this line is called
-    currentMood = averageMood(time-1000*this.liveTime, time);
-    return currentMood;
+    this.currentMood = averageMood(time-1000*this.liveTime, time);
+    return this.currentMood;
   }
 
   public float averageMood(long starttime, long endtime){
     float sum = 0;
     int size = this.userFeedback.size();
-    for (int i=0; i<this.userFeedback.size(); i++){
-      if (this.userFeedback.get(i).getFeedback().size() != 0){ //ignore Users with no feedback
-        sum += this.userFeedback.get(i).averageMood(starttime, endtime);
+    for (Integer key : userFeedback.keySet()){
+      if (this.userFeedback.get(key).getFeedback().size() != 0){ //ignore Users with no feedback
+        sum += this.userFeedback.get(key).averageMood(starttime, endtime);
       }else{
         size -= 1;
       }
@@ -135,10 +136,10 @@ public class Event{
     return this.id;
   }
   public ArrayList<Tag> getTags(){
-    return tags;
+    return this.tags;
   }
-  public ArrayList<UserFeedback> getUserFeedback(){
-    return userFeedback;
+  public HashMap<Integer, UserFeedback> getUserFeedback(){
+    return this.userFeedback;
   }
   public void setName(String name){
     this.name = name;

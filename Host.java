@@ -91,13 +91,8 @@ public class Host extends User{
 
     //get the feedback
     ArrayList<Feedback> feedback =  new ArrayList<Feedback>();
-    ArrayList<UserFeedback> userFeedback = currentEvent.getUserFeedback();
-    for (int u1: userIDs){
-      for (UserFeedback u2: userFeedback){
-        if (u2.getUser().getID() == u1){
-          feedback.addAll(u2.getFeedback());
-        }
-      }
+    for (int ID : userIDs){
+      feedback.addAll(this.currentEvent.getUserFeedback().get(ID).getFeedback());
     }
     //still need to order by time
     return feedback;
