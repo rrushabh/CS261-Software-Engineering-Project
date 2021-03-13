@@ -56,7 +56,7 @@ public class User{
       String id = main.generateID();
       int ID = Integer.parseInt(id);
       //create skeleton event: -name given as id.
-      Event newEvent = new Event(Integer.parseInt(id), id, this.hostMode);
+      Event newEvent = new Event(ID, id, this.hostMode);
       main.events.put(ID, newEvent);
       this.eventList.add(new Eventtype(newEvent, 1));
 
@@ -78,7 +78,6 @@ public class User{
           //-move host to event data page
           this.hostMode.setEvent(event);
           this.mode = 1;
-          return true;
       }
         else if (event.accessible == true && event.linkAccess == true){
           if (!event.addUser(this.attendeeMode)){//gives false if already member

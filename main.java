@@ -64,12 +64,16 @@ public class main{
 
       //new User joins our event
       host.toggleIDJoining();
-      user2.joinEventID(events.get(0).getID());
+      int event1ID = 0;
+      for (int ID : events.keySet()){
+        event1ID = ID;
+      }
+      user2.joinEventID(event1ID);
       Attendee attendee = user2.getAttendee();
 
       //see event users
       HashMap<Integer, UserFeedback> eventusers =  new HashMap<Integer, UserFeedback>();
-      eventusers = events.get(0).getUserFeedback();
+      eventusers = events.get(event1ID).getUserFeedback();
       // System.out.println("names of event users:");
       // for (UserFeedback u : eventusers){
       //   System.out.println(u.getUser().getName());
@@ -87,8 +91,8 @@ public class main{
 
       //submit feedback
       //50 used for base mood if none given (0-100 scale)
-      attendee.submitFeedback(50, new ArrayList<Tag>(Arrays.asList(attendee.getEvent().getTags().get(0))), "This is some feedback");
-      attendee.submitFeedback(80, new ArrayList<Tag>(Arrays.asList(attendee.getEvent().getTags().get(0))), "This is some more feedback");
+      attendee.submitFeedback(2, new ArrayList<Tag>(Arrays.asList(attendee.getEvent().getTags().get(0))), "This is some feedback");
+      attendee.submitFeedback(3, new ArrayList<Tag>(Arrays.asList(attendee.getEvent().getTags().get(0))), "This is some more feedback");
 
       //view feedback
       // System.out.println("Feedback:");
@@ -105,9 +109,9 @@ public class main{
       //JUST MORE EXPERIMENTS:
       //create another User who adds feedback to the event
       User user3 = createUser("name3");
-      user3.joinEventID(events.get(0).getID());
-      Attendee attendee2 = user3.getAttendee();
-      attendee2.submitFeedback(80, new ArrayList<Tag>(Arrays.asList(attendee.getEvent().getTags().get(0),attendee.getEvent().getTags().get(1))), "This is even more feedback");
+      user3.joinEventID(event1ID);
+      Attendee attendee3 = user3.getAttendee();
+      attendee3.submitFeedback(4, new ArrayList<Tag>(Arrays.asList(attendee.getEvent().getTags().get(0),attendee.getEvent().getTags().get(1))), "This is even more feedback");
 
       //GUEST STUFF
       //create guest
@@ -115,29 +119,35 @@ public class main{
       Guest guest = new Guest(base);
       //joining as guest
       host.toggleGuests();
-      guest.joinEventID(events.get(0).getID());
+      guest.joinEventID(event1ID);
       //submitting anonymously
       attendee.toggleAnonymous();
-      attendee.submitFeedback(30, new ArrayList<Tag>(Arrays.asList(attendee.getEvent().getTags().get(1))), "This is some anonymous feedback");
+      attendee.submitFeedback(1, new ArrayList<Tag>(Arrays.asList(attendee.getEvent().getTags().get(1))), "This is some anonymous feedback");
       attendee.toggleAnonymous();
 
       //EVEN MORE EXPERIMENTS
       //create more events and check anonymity as User moves between them
       User user4 = createUser("name4");
       user4.createEvent();
+      int event2ID = 0;
+      for (int ID : events.keySet()){
+        if (event1ID != ID){
+          event2ID = ID;
+        }
+      }
       Host host2 = user4.getHost();
       host2.renameEvent("eventname2");
       host2.toggleIDJoining();
       //user now joins new event
-      user2.joinEventID(events.get(1).getID()); //NEED TO MAKE MORE CLEAR IF THIS FAILS
+      user2.joinEventID(event2ID); //NEED TO MAKE MORE CLEAR IF THIS FAILS
       attendee.toggleAnonymous();
       host2.addTag("tag2-1");
-      attendee.submitFeedback(30, new ArrayList<Tag>(Arrays.asList(attendee.getEvent().getTags().get(0))), "This is some more anonymous feedback on a different event");
+      attendee.submitFeedback(2, new ArrayList<Tag>(Arrays.asList(attendee.getEvent().getTags().get(0))), "This is some more anonymous feedback on a different event");
       attendee.toggleAnonymous();
       //user now returns to orginal
-      user2.joinEventID(events.get(0).getID());
+      user2.joinEventID(event1ID);
       attendee.toggleAnonymous();
-      attendee.submitFeedback(30, new ArrayList<Tag>(Arrays.asList(attendee.getEvent().getTags().get(1))), "This is some more anonymous feedback back on the first event");
+      attendee.submitFeedback(1, new ArrayList<Tag>(Arrays.asList(attendee.getEvent().getTags().get(1))), "This is some more anonymous feedback back on the first event");
       attendee.toggleAnonymous();
 
 
@@ -157,12 +167,12 @@ public class main{
 
       //filtering feedback and setting what should be displayed:
       //to display all feedback just filter by all users (or all tags - less efficient)
-      events.get(0).setDisplay(host.filterFeedbackUser(new ArrayList<Integer>(Arrays.asList(attendee.getID(),attendee2.getID()))));
+      events.get(event1ID).setDisplay(host.filterFeedbackUser(new ArrayList<Integer>(Arrays.asList(attendee.getID(),attendee3.getID()))));
       //always sort by time before displaying
-      events.get(0).sortDisplay();
+      events.get(event1ID).sortDisplay();
       //the display ordered by time
       System.out.println("Filtered feedback:");
-      Event event = events.get(0);
+      Event event = events.get(event1ID);
       for (Feedback f: event.getDisplay()){
         System.out.println(f.getText() + "," + f.getTime());
       }
