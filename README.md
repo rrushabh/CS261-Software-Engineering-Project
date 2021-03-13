@@ -9,5 +9,5 @@ Running the example stuff in command line:
 
 -javac -cp 'path to stanford-corenlp-4.2.0.jar' *.java
 
--java -classpath .:'path to stanford-corenlp-4.2.0 directory'/* main 
+-java -classpath .:'path to stanford-corenlp-4.2.0 directory'/* main (: on linux, may be ; on others if this doesn't work)
 
