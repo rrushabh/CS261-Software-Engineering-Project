@@ -29,19 +29,18 @@ public class Guest extends Attendee {
     }
 
     public boolean joinEventID(int id){
-        for (Event event: main.events){
-          if (event.getID() == id){
-            if (event.accessible == true && event.linkAccess == true && event.guests == true){
-                if (!event.addUser(this)){//gives false if already member
-                  this.addEvent(event,0);
-                }
-                this.setEvent(event);//this is where we create Guest if needed or find correct one if been in event before
-                setMode(0);
-                return true;
+      if (main.events.containsKey(id)){
+        Event event = main.events.get(id);
+        if (event.accessible == true && event.linkAccess == true && event.guests == true){
+            if (!event.addUser(this)){//gives false if already member
+              this.addEvent(event,0);
             }
-          }
+            this.setEvent(event);//this is where we create Guest if needed or find correct one if been in event before
+            setMode(0);
+            return true;
         }
-        return false;
+      }
+      return false;
     }
 
     //guests will be deleted when event they're a part of is

@@ -1,5 +1,3 @@
-import java.util.ArrayList;
-import java.util.Random;
 import java.util.*;
 
 // import User.java;
@@ -12,8 +10,11 @@ import java.util.*;
 public class main{
 
   //would conenct to some server or database
-  static ArrayList<Event>events;
-  static ArrayList<User>users;
+  //static ArrayList<Event>events;
+  //static ArrayList<User>users;
+
+  static HashMap<Integer, Event>events;
+  static HashMap<Integer, User>users;
 
   //give default tags
   static ArrayList<Tag>defaults;//note default tags will need to be copied (pass value not pass reference) into event or feedback will be shared across them
@@ -29,10 +30,14 @@ public class main{
 
       //In practise this will link User to main page and let them go from there
       //For now it allows testing
-
+    /*
       events = new ArrayList<Event>();
       users = new ArrayList<User>();
+    */
+      users = new HashMap<Integer, User>();
+      events = new HashMap<Integer, Event>();
       defaults = new ArrayList<Tag>();
+      
 
       usedIDs = new ArrayList<String>();
 
@@ -63,7 +68,7 @@ public class main{
       Attendee attendee = user2.getAttendee();
 
       //see event users
-      ArrayList<UserFeedback> eventusers =  new ArrayList<UserFeedback>();
+      HashMap<Integer, UserFeedback> eventusers =  new HashMap<Integer, UserFeedback>();
       eventusers = events.get(0).getUserFeedback();
       // System.out.println("names of event users:");
       // for (UserFeedback u : eventusers){
@@ -138,16 +143,16 @@ public class main{
 
       //how have values changed?
       System.out.println("Feedback:");
-      for (Event e: events){
-        System.out.println("Event:" + e.getName());
-        eventusers = e.getUserFeedback();
-        for (UserFeedback u : eventusers){
-          System.out.println("User:" + u.getUser().getName());
-          for (Feedback f: u.getFeedback()){
+      for (int eID : events.keySet()){
+        System.out.println("Event:" + events.get(eID).getName());
+        eventusers = events.get(eID).getUserFeedback();
+        for (int uID : eventusers.keySet()){
+          System.out.println("User:" + eventusers.get(uID).getUser().getName());
+          for (Feedback f: events.get(eID).getUserFeedback().get(uID).getFeedback()){
             System.out.println(f.getText() + "," + f.getMood());
           }
         }
-        System.out.println(e.currentMood());
+        System.out.println(events.get(eID).currentMood());
       }
 
       //filtering feedback and setting what should be displayed:
@@ -185,11 +190,11 @@ public class main{
   }
 
   public static User createUser(String name){
-    User user = new User(userNumber,name);
+    User user = new User(userNumber, name);
     userNumber++;
     user.createHost();
     user.createAttendee();
-    users.add(user);
+    users.put(userNumber, user);
     // System.out.println("A user:" + user);
     return user;
   }

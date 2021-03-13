@@ -75,8 +75,8 @@ public class Event{
     //-average these averages
     Date date = new Date();
     long time = date.getTime();       //calculates average mood of feedback between liveTime seconds ago and when this line is called
-    currentMood = averageMood(time-1000*this.liveTime, time);
-    return currentMood;
+    this.currentMood = averageMood(time-1000*this.liveTime, time);
+    return this.currentMood;
   }
 
   public float averageMood(long starttime, long endtime){
@@ -136,10 +136,10 @@ public class Event{
     return this.id;
   }
   public ArrayList<Tag> getTags(){
-    return tags;
+    return this.tags;
   }
   public HashMap<Integer, UserFeedback> getUserFeedback(){
-    return userFeedback;
+    return this.userFeedback;
   }
   public void setName(String name){
     this.name = name;
