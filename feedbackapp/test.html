@@ -1,0 +1,80 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+</head>
+<body>
+<canvas id="myChart" width="100" height="30"></canvas>
+<button onclick="clearInterval(interval);">End event</button>
+<p id="demo"></p>
+
+<script>
+var ctx = document.getElementById('myChart');
+let chart = new Chart(ctx, {
+	type: 'bar',
+	data: {
+	    datasets: [{
+			barPercentage: 0.2,
+	        label: 'Average Attendee Mood over Time',
+	        data: [],
+			backgroundColor: [
+				'rgba(255, 99, 132, 0.2)',
+	        	'rgba(54, 162, 235, 0.2)',
+	        	'rgba(255, 206, 86, 0.2)',
+	        	'rgba(75, 192, 192, 0.2)',
+	        	'rgba(153, 102, 255, 0.2)',
+	        	'rgba(255, 159, 64, 0.2)',
+	        ],
+	        borderColor: [
+				'rgba(255, 99, 132, 1)',
+	            'rgba(54, 162, 235, 1)',
+	            'rgba(255, 206, 86, 1)',
+	            'rgba(75, 192, 192, 1)',
+	            'rgba(153, 102, 255, 1)',
+	            'rgba(255, 159, 64, 1)',
+	        ],
+	        borderWidth: 2
+	    }],
+	    labels: []
+	},
+	options: {
+	    scales: {
+	        yAxes: [{
+	            ticks: {
+	                suggestedMin: 0,
+	                suggestedMax: 100
+	            }
+	        }]
+	    }
+	}
+});
+
+var i = 0;
+
+function addData(chart, data) {
+	var d = new Date();
+	var h = d.getUTCHours();
+	if (h < 10)  h = '0' + h;
+	var m = d.getUTCMinutes();
+	if (m < 10)  m = '0' + m;
+	var s = d.getUTCSeconds();
+	if (s < 10)  s = '0' + s;
+  	var t = h + ":" + m + ":" + s;
+	data = Math.floor(Math.random()*100);
+	chart.data.labels.push(t);
+	chart.data.datasets.forEach((dataset) => {
+	    dataset.data.push(data);
+		dataset.backgroundColor.push(dataset.backgroundColor[i]);
+		dataset.borderColor.push(dataset.borderColor[i]);
+	});
+	chart.update();
+}
+
+const interval = setInterval(function() {
+	addData(chart, 20);
+	i = i + 1;
+ }, 5000);
+
+</script>
+</body>
+</html>
