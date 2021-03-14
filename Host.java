@@ -51,7 +51,8 @@ public class Host extends User{
   public void deleteEvent(){
      //-prompts user if sure they want to delete event
      //-if so it is deleted
-     
+     currentEvent.delete();
+
   }
 
   //SHOULD
