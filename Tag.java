@@ -17,9 +17,9 @@ class Tag{
   }
 
   public String getTag(){
-    return tag;
+    return this.tag;
   }
   public ArrayList<Feedback> getFeedback(){
-    return feedback;
+    return this.feedback;
   }
 }

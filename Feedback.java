@@ -52,7 +52,7 @@ public class Feedback{
     */
     this.event.userFeedback.get(this.attendee.getID()).addFeedback(this);
     for (Tag tag : this.tags){
-      this.event.feedbackByTag.get(tag.tag).add(this);
+      this.event.feedbackByTag.get(tag.getTag()).add(this);
     }
   }
 

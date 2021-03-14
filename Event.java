@@ -127,6 +127,7 @@ public class Event{
 
   public void addTag(String tag){
     this.tags.add(new Tag(tag));
+    this.feedbackByTag.put(tag, new ArrayList<Feedback>());
   }
 
   public String getName(){
