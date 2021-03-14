@@ -110,6 +110,21 @@ public class User{
     }
     return false;
   }
+  
+  //deletes and event for a User
+  public void deleteMenuEvent(Event event){
+    for (Eventtype eventtype : eventList){
+      if (eventtype.getEvent() == event){
+        eventList.remove(eventtype);//find and remove event from list
+        if (eventtype.getType() == 0){
+           attendeeMode.deleteAnonymous(event);//delete associated Guest if attendee
+        }
+        break;
+      }
+    }
+    //remove anonymous User thing?
+    return;
+  }
 
   public Attendee getAttendee(){
     return attendeeMode;
