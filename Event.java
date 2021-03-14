@@ -112,6 +112,24 @@ public class Event{
     }
     return guests;
   }
+  
+  //delete the event
+  public void delete(){
+     for (Integer key : userFeedback.keySet()){
+        Attendee attendee = this.userFeedback.get(key).getUser();
+        if (attendee instanceof Guest){
+            attendee = null; //delete any guests
+        }else{
+          //for any other attendees
+          User user = attendee.getUser();
+          user.deleteMenuEvent(this); //delete event from menu.
+        }
+
+    }
+    Host host = this.host;
+    host.getUser().deleteMenuEvent(this); //delete event for host
+    main.events.remove(this.getID()); //and delete from main storage
+  }
 
   public void sortDisplay(){
     displayFeedback.sort(new TimeSorter());
